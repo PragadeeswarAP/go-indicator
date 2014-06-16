@@ -9,9 +9,12 @@ import xml.etree.ElementTree as ET
 import webbrowser
 
 # PING_FREQUENCY = 10
+# pathToIcon = "/home/kumaran/go-logo1.jpg"
+# urlOfXml = "http://sivakumaran-hp:8153/go/cctray.xml"
 selectedPipelines = []
-pathToIcon = "/home/kumaran/go-logo1.jpg"
-urlOfXml = "http://sivakumaran-hp:8153/go/cctray.xml"
+pathToIcon = "/media/yooo/5A3426C44A1D9AD2/Indix/Hackn8/go-indicator/go-logo1.jpg"
+urlOfXml = "http://abyss:8153/go/cctray.xml"
+
 allData = []
 selectedPipelines = []
 stageDict = {}
@@ -142,15 +145,17 @@ class CheckGo:
         for project in list(set(allData)):
             button = Gtk.CheckButton(project)
             button.connect("toggled", self.updateSelectedPipelines, project)
-            vbox.pack_start(button, True, True, 2)
+            vbox.pack_start(button, True, True, 1)
+            if project in selectedPipelines:
+            	button.set_active(project)
             button.show()
         window.show()
 
     def updateSelectedPipelines(self, button, name):
-        if button.get_active():
+        if button.get_active() and name not in selectedPipelines:
             state = "on"
             selectedPipelines.append(name)
-        else:
+        elif not button.get_active() and name in selectedPipelines:
             state = "off"
             selectedPipelines.remove(name)
 
